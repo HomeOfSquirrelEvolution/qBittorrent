@@ -28,6 +28,9 @@
 
 #include "addnewtorrentdialog.h"
 
+#include <sstream>
+#include <QCryptographicHash>
+
 #include <QDebug>
 #include <QDir>
 #include <QFileDialog>
@@ -59,6 +62,8 @@
 #include "ui_addnewtorrentdialog.h"
 #include "uithememanager.h"
 #include "utils.h"
+
+#include "base/skyeysnow/autoreseed.h"
 
 namespace
 {
@@ -600,6 +605,9 @@ void AddNewTorrentDialog::displayContentTreeMenu(const QPoint &)
 
 void AddNewTorrentDialog::accept()
 {
+    // TODO(kuriko): auto Reseed mode settings
+    m_torrentParams.autoReseedMode = m_ui->autoReseedModeCheckBox->isChecked();
+
     // TODO: Check if destination actually exists
     m_torrentParams.skipChecking = m_ui->skipCheckingCheckBox->isChecked();
 
@@ -641,6 +649,46 @@ void AddNewTorrentDialog::accept()
         BitTorrent::Session::instance()->addTorrent(m_torrentInfo, m_torrentParams);
 
     m_torrentGuard->markAsAddedToSession();
+
+    // TODO(kuriko): auto reseed mode procedure
+    if (m_torrentParams.autoReseedMode) {
+        skyeysnow::AutoReseed reseedMgr;
+        QMessageBox msgBox;
+        msgBox.setText(QObject::tr("reseed 相关功能页面"));
+
+
+        // Test read binary file
+        const auto Sha1 = QCryptographicHash::Sha1;
+        QFile file("/home/kuriko/Projects/qBittorrent/00000.clpi");
+        auto actual_size = file.size();
+        if (!file.open(QIODevice::ReadOnly))
+                return;
+        auto data = file.readAll();
+        auto actual_hash = QCryptographicHash::hash(data, Sha1);
+
+        for (int i = 0; i < m_torrentInfo.filesCount(); i++) {
+            auto ret1 = m_torrentInfo.origFilePath(i);
+            auto path = m_torrentInfo.filePath(i);
+            auto name = m_torrentInfo.fileName(i);
+            auto hash = m_torrentInfo.fileHash(i);
+            auto size = m_torrentInfo.fileSize(i);
+            std::stringstream ss;
+            ss << hash;
+            auto tmp = QString::fromStdString(ss.str());
+            qDebug() << ret1
+                     << path
+                     << name
+                     << size
+                     << tmp;
+
+            auto hex = actual_hash.toHex();
+            qDebug() << actual_size
+                     << actual_hash.toHex();
+        }
+        msgBox.exec();
+        QDialog::reject();
+    }
+
     QDialog::accept();
 }
 

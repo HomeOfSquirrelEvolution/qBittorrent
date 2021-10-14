@@ -72,7 +72,6 @@ public:
     // static interface to get/set preferences
     static AutoDeleteMode autoDeleteMode();
     static void setAutoDeleteMode(AutoDeleteMode mode);
-
 private:
     TorrentFileGuard(const QString &path, AutoDeleteMode mode);
     static SettingValue<AutoDeleteMode> &autoDeleteModeSetting();

@@ -1,4 +1,7 @@
 add_library(qbt_base STATIC
+    # Skyeysnow headers
+    skyeysnow/autoreseed.h
+
     # headers
     algorithm.h
     asyncfilestorage.h
@@ -93,6 +96,9 @@ add_library(qbt_base STATIC
     utils/string.h
     utils/version.h
     version.h
+
+    #Skyeysnow sources
+    skyeysnow/autoreseed.cpp
 
     # sources
     asyncfilestorage.cpp

@@ -280,6 +280,11 @@ QString TorrentInfo::fileName(const int index) const
     return Utils::Fs::fileName(filePath(index));
 }
 
+libtorrent::sha1_hash TorrentInfo::fileHash(const int index) const
+{
+    return m_nativeInfo->files().hash(index);
+}
+
 QString TorrentInfo::origFilePath(const int index) const
 {
     if (!isValid()) return {};

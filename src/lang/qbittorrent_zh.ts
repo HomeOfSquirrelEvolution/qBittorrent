@@ -277,6 +277,11 @@
         <translation>不删除 .torrent 文件</translation>
     </message>
     <message>
+        <location filename="../gui/addnewtorrentdialog.ui" line="144"/>
+        <source>Auto Reseed Mode</source>
+        <translation>自动辅种模式</translation>
+    </message>
+    <message>
         <location filename="../gui/addnewtorrentdialog.ui" line="165"/>
         <source>Download in sequential order</source>
         <translation>按顺序下载</translation>

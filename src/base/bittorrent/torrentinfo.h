@@ -76,6 +76,8 @@ namespace BitTorrent
         QString filePath(int index) const override;
         QStringList filePaths() const;
         QString fileName(int index) const override;
+        // TODO(kuriko): retrive filehash from m_nativeinfo.m_files.m_file_hashes
+        libtorrent::sha1_hash fileHash(int index) const;
         QString origFilePath(int index) const;
         qlonglong fileSize(int index) const override;
         qlonglong fileOffset(int index) const;

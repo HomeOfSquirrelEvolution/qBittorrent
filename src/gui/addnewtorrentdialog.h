@@ -89,7 +89,6 @@ private slots:
 
     void accept() override;
     void reject() override;
-
 private:
     explicit AddNewTorrentDialog(const BitTorrent::AddTorrentParams &inParams, QWidget *parent);
     bool loadTorrentFile(const QString &torrentPath);

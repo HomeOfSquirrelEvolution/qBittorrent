@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>900</width>
-    <height>620</height>
+    <height>647</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="AddNewTorrentDialogLayout">
@@ -135,37 +135,6 @@
           </item>
           <item>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="2" column="0">
-             <widget class="QCheckBox" name="doNotDeleteTorrentCheckBox">
-              <property name="toolTip">
-               <string>When checked, the .torrent file will not be deleted despite the settings at the &quot;Download&quot; page of the options dialog</string>
-              </property>
-              <property name="text">
-               <string>Do not delete .torrent file</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QCheckBox" name="firstLastCheckBox">
-              <property name="text">
-               <string>Download first and last pieces first</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QCheckBox" name="skipCheckingCheckBox">
-              <property name="text">
-               <string>Skip hash check</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QCheckBox" name="sequentialCheckBox">
-              <property name="text">
-               <string>Download in sequential order</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="0">
              <widget class="QCheckBox" name="startTorrentCheckBox">
               <property name="text">
@@ -185,6 +154,44 @@
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="skipCheckingCheckBox">
+              <property name="text">
+               <string>Skip hash check</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QCheckBox" name="firstLastCheckBox">
+              <property name="text">
+               <string>Download first and last pieces first</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QCheckBox" name="sequentialCheckBox">
+              <property name="text">
+               <string>Download in sequential order</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QCheckBox" name="doNotDeleteTorrentCheckBox">
+              <property name="toolTip">
+               <string>When checked, the .torrent file will not be deleted despite the settings at the &quot;Download&quot; page of the options dialog</string>
+              </property>
+              <property name="text">
+               <string>Do not delete .torrent file</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QCheckBox" name="autoReseedModeCheckBox">
+              <property name="text">
+               <string>Auto Reseed Mode</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -249,25 +256,8 @@
           <string>Torrent information</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="0">
-           <widget class="QLabel" name="labelDate">
-            <property name="text">
-             <string>Date:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="labelSizeData"/>
-          </item>
           <item row="1" column="1">
            <widget class="QLabel" name="labelDateData"/>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="labelSize">
-            <property name="text">
-             <string>Size:</string>
-            </property>
-           </widget>
           </item>
           <item row="2" column="1">
            <widget class="QLabel" name="labelHashData">
@@ -295,8 +285,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>333</width>
-               <height>69</height>
+               <width>401</width>
+               <height>68</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -335,10 +325,17 @@
             </widget>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="labelHash">
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelDate">
             <property name="text">
-             <string>Hash:</string>
+             <string>Date:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelSize">
+            <property name="text">
+             <string>Size:</string>
             </property>
            </widget>
           </item>
@@ -349,6 +346,16 @@
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="labelSizeData"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelHash">
+            <property name="text">
+             <string>Hash:</string>
             </property>
            </widget>
           </item>

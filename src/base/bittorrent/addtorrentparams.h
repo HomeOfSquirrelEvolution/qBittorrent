@@ -61,6 +61,9 @@ namespace BitTorrent
         int downloadLimit = -1;
         int seedingTimeLimit = Torrent::USE_GLOBAL_SEEDING_TIME;
         qreal ratioLimit = Torrent::USE_GLOBAL_RATIO;
+
+        // TODO(kuriko): reseed mode
+        bool autoReseedMode = false;
     };
 }
 
