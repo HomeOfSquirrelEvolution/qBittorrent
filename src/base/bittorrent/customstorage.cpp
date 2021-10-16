@@ -262,6 +262,7 @@ lt::status_t CustomStorage::move_storage(const std::string &savePath, lt::move_f
 
 void CustomStorage::handleCompleteFiles(const QString &savePath)
 {
+    // TODO(Kuriko): the file check algorigthm
     const QDir saveDir {savePath};
 
     const lt::file_storage &fileStorage = files();

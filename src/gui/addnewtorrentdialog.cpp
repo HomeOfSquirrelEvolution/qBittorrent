@@ -652,10 +652,11 @@ void AddNewTorrentDialog::accept()
 
     // TODO(kuriko): auto reseed mode procedure
     if (m_torrentParams.autoReseedMode) {
-        skyeysnow::AutoReseed reseedMgr;
+        skyeysnow::AutoReseed reseedMgr = {m_torrentInfo, m_torrentParams};
+
+        // Show reseeding page
         QMessageBox msgBox;
         msgBox.setText(QObject::tr("reseed 相关功能页面"));
-
 
         // Test read binary file
         const auto Sha1 = QCryptographicHash::Sha1;
