@@ -65,6 +65,9 @@
 
 #include "base/skyeysnow/autoreseed.h"
 
+#include <libtorrent/file_storage.hpp>
+#include <libtorrent/file_storage.hpp>
+
 namespace
 {
 #define SETTINGS_KEY(name) "AddNewTorrentDialog/" name
@@ -667,6 +670,8 @@ void AddNewTorrentDialog::accept()
         auto data = file.readAll();
         auto actual_hash = QCryptographicHash::hash(data, Sha1);
 
+        m_torrentInfo.remapFile();
+
         for (int i = 0; i < m_torrentInfo.filesCount(); i++) {
             auto ret1 = m_torrentInfo.origFilePath(i);
             auto path = m_torrentInfo.filePath(i);
@@ -686,8 +691,10 @@ void AddNewTorrentDialog::accept()
             qDebug() << actual_size
                      << actual_hash.toHex();
         }
-        msgBox.exec();
-        QDialog::reject();
+        // Remap the file to new filestorage
+
+//        msgBox.exec();
+//        QDialog::reject();
     }
 
     QDialog::accept();

@@ -31,6 +31,7 @@
 #include <libtorrent/bencode.hpp>
 #include <libtorrent/create_torrent.hpp>
 #include <libtorrent/error_code.hpp>
+#include <libtorrent/file_storage.hpp>
 #include <libtorrent/version.hpp>
 
 #include <QByteArray>
@@ -41,6 +42,7 @@
 #include <QStringList>
 #include <QUrl>
 #include <QVector>
+#include <sstream>
 
 #include "base/exceptions.h"
 #include "base/global.h"
@@ -111,6 +113,31 @@ TorrentInfo TorrentInfo::load(const QByteArray &data, QString *error) noexcept
     }
 
     TorrentInfo info {std::shared_ptr<lt::torrent_info>(new lt::torrent_info(node, ec))};
+
+    // TODO(kuriko): Insert filedata decode for skyeysnow
+    auto ret = node.dict_find("info");
+    if (ret.type() == decltype(ret)::none_t) {
+        *error = QString::fromStdString("No Info Area in torrent");
+        return TorrentInfo();
+    }
+    ret = ret.dict_find("files");
+    if (ret.type() == decltype(ret)::none_t) {
+        *error = QString::fromStdString("No Info::Files Area in torrent");
+        return TorrentInfo();
+    } else if (ret.type() != decltype(ret)::list_t) {
+        *error = QString::fromStdString("Info::Files Area is not list");
+        return TorrentInfo();
+    }
+    auto tmp = ret.list_at(0);
+    auto filedata = tmp.dict_find("filedata");
+    auto size = tmp.dict_find("length");
+
+    auto a = tmp.string_ptr();
+    auto b = size.int_value();
+
+    qDebug() << "REACHED";
+
+
     if (ec)
     {
         if (error)
@@ -283,6 +310,17 @@ QString TorrentInfo::fileName(const int index) const
 libtorrent::sha1_hash TorrentInfo::fileHash(const int index) const
 {
     return m_nativeInfo->files().hash(index);
+}
+
+void TorrentInfo::remapFile() {
+    // Build new files
+    for (int i = 0; i < this->filesCount(); i++) {
+        std::stringstream ss;
+        ss << i;
+        m_nativeInfo->rename_file(i, ss.str());
+    }
+
+//    this->m_nativeInfo->remap_files(files);
 }
 
 QString TorrentInfo::origFilePath(const int index) const
