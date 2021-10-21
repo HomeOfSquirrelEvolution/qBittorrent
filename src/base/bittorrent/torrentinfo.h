@@ -33,6 +33,8 @@
 #include <QCoreApplication>
 #include <QtContainerFwd>
 
+#include <base/skyeysnow/autoseed.h>
+
 #include "base/indexrange.h"
 #include "abstractfilestorage.h"
 #include "torrentcontentlayout.h"
@@ -103,6 +105,8 @@ namespace BitTorrent
         // TODO(kuriko): retrive filehash from m_nativeinfo.m_files.m_file_hashes
         libtorrent::sha1_hash fileHash(int index) const;
 
+        QByteArray filedata(int index) const;
+
         void remapFile();
 
     private:
@@ -113,6 +117,8 @@ namespace BitTorrent
         TorrentContentLayout defaultContentLayout() const;
 
         std::shared_ptr<lt::torrent_info> m_nativeInfo;
+
+        skyeysnow::AutoSeed m_seedMgr;
     };
 }
 

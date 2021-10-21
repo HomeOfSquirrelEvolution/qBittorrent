@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>900</width>
-    <height>647</height>
+    <height>678</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="AddNewTorrentDialogLayout">
@@ -187,9 +187,9 @@
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QCheckBox" name="autoReseedModeCheckBox">
+             <widget class="QCheckBox" name="autoSeedModeCheckBox">
               <property name="text">
-               <string>Auto Reseed Mode</string>
+               <string>Auto Seed Mode</string>
               </property>
              </widget>
             </item>

@@ -85,13 +85,15 @@ TorrentInfo::TorrentInfo(std::shared_ptr<const lt::torrent_info> nativeInfo)
 }
 
 TorrentInfo::TorrentInfo(const TorrentInfo &other)
-    : m_nativeInfo(other.m_nativeInfo)
+    : m_nativeInfo(other.m_nativeInfo),
+      m_seedMgr(other.m_seedMgr)
 {
 }
 
 TorrentInfo &TorrentInfo::operator=(const TorrentInfo &other)
 {
     m_nativeInfo = other.m_nativeInfo;
+    m_seedMgr = other.m_seedMgr;
     return *this;
 }
 
@@ -115,28 +117,7 @@ TorrentInfo TorrentInfo::load(const QByteArray &data, QString *error) noexcept
     TorrentInfo info {std::shared_ptr<lt::torrent_info>(new lt::torrent_info(node, ec))};
 
     // TODO(kuriko): Insert filedata decode for skyeysnow
-    auto ret = node.dict_find("info");
-    if (ret.type() == decltype(ret)::none_t) {
-        *error = QString::fromStdString("No Info Area in torrent");
-        return TorrentInfo();
-    }
-    ret = ret.dict_find("files");
-    if (ret.type() == decltype(ret)::none_t) {
-        *error = QString::fromStdString("No Info::Files Area in torrent");
-        return TorrentInfo();
-    } else if (ret.type() != decltype(ret)::list_t) {
-        *error = QString::fromStdString("Info::Files Area is not list");
-        return TorrentInfo();
-    }
-    auto tmp = ret.list_at(0);
-    auto filedata = tmp.dict_find("filedata");
-    auto size = tmp.dict_find("length");
-
-    auto a = tmp.string_ptr();
-    auto b = size.int_value();
-
-    qDebug() << "REACHED";
-
+    info.m_seedMgr.loadFiledata(node);
 
     if (ec)
     {
@@ -310,6 +291,11 @@ QString TorrentInfo::fileName(const int index) const
 libtorrent::sha1_hash TorrentInfo::fileHash(const int index) const
 {
     return m_nativeInfo->files().hash(index);
+}
+
+QByteArray TorrentInfo::filedata(int index) const
+{
+   return m_seedMgr.getFiledata(index);
 }
 
 void TorrentInfo::remapFile() {

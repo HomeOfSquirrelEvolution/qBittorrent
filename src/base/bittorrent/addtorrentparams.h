@@ -63,7 +63,7 @@ namespace BitTorrent
         qreal ratioLimit = Torrent::USE_GLOBAL_RATIO;
 
         // TODO(kuriko): reseed mode
-        bool autoReseedMode = false;
+        bool autoSeedMode = false;
     };
 }
 

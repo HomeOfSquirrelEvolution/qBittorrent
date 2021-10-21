@@ -63,7 +63,7 @@
 #include "uithememanager.h"
 #include "utils.h"
 
-#include "base/skyeysnow/autoreseed.h"
+#include "base/skyeysnow/autoseed.h"
 
 #include <libtorrent/file_storage.hpp>
 #include <libtorrent/file_storage.hpp>
@@ -609,7 +609,7 @@ void AddNewTorrentDialog::displayContentTreeMenu(const QPoint &)
 void AddNewTorrentDialog::accept()
 {
     // TODO(kuriko): auto Reseed mode settings
-    m_torrentParams.autoReseedMode = m_ui->autoReseedModeCheckBox->isChecked();
+    m_torrentParams.autoSeedMode = m_ui->autoSeedModeCheckBox->isChecked();
 
     // TODO: Check if destination actually exists
     m_torrentParams.skipChecking = m_ui->skipCheckingCheckBox->isChecked();
@@ -654,9 +654,7 @@ void AddNewTorrentDialog::accept()
     m_torrentGuard->markAsAddedToSession();
 
     // TODO(kuriko): auto reseed mode procedure
-    if (m_torrentParams.autoReseedMode) {
-        skyeysnow::AutoReseed reseedMgr = {m_torrentInfo, m_torrentParams};
-
+    if (m_torrentParams.autoSeedMode) {
         // Show reseeding page
         QMessageBox msgBox;
         msgBox.setText(QObject::tr("reseed 相关功能页面"));
