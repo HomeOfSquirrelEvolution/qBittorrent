@@ -25,6 +25,8 @@ public:
 
     QByteArray getFiledata(int index) const;
 
+    int alterSavePath();
+
 //    int dump_filedata();
 private:
     QByteArray hash(const QByteArray &data);

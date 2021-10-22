@@ -65,6 +65,12 @@ QByteArray AutoSeed::getFiledata(int index) const
    return ret;
 }
 
+int AutoSeed::alterSavePath()
+{
+
+    return 0;
+}
+
 QByteArray AutoSeed::hash(const QByteArray &data) {
     return QCryptographicHash::hash(data, QCryptographicHash::Sha1);
 }

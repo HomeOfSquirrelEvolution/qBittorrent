@@ -655,6 +655,9 @@ void AddNewTorrentDialog::accept()
 
     // TODO(kuriko): auto reseed mode procedure
     if (m_torrentParams.autoSeedMode) {
+        // Tweak the m_torrentParams, add filedata info
+        m_torrentParams.autoSeedMode;
+
         // Show reseeding page
         QMessageBox msgBox;
         msgBox.setText(QObject::tr("reseed 相关功能页面"));

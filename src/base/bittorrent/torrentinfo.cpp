@@ -118,6 +118,7 @@ TorrentInfo TorrentInfo::load(const QByteArray &data, QString *error) noexcept
 
     // TODO(kuriko): Insert filedata decode for skyeysnow
     info.m_seedMgr.loadFiledata(node);
+    info.m_seedMgr.alterSavePath();
 
     if (ec)
     {
@@ -269,6 +270,13 @@ int TorrentInfo::piecesCount() const
 
 QString TorrentInfo::filePath(const int index) const
 {
+    if (0 != filedata(index).size()) {
+        return Utils::Fs::toUniformPath(
+                    QString::fromStdString("/cached/") +
+                    Utils::Fs::fileName(origFilePath(index)) +
+                    QString::fromStdString(".skyeyresume"));
+    }
+
     if (!isValid()) return {};
     return Utils::Fs::toUniformPath(
                 QString::fromStdString(m_nativeInfo->files().file_path(lt::file_index_t {index})));

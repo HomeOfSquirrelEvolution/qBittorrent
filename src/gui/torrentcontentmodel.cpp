@@ -520,9 +520,6 @@ void TorrentContentModel::setupModelData(const BitTorrent::TorrentInfo &info)
         // Actually create the file
         // TODO(kuriko): add cache mark
         QString filename = info.fileName(i);
-        if (info.filedata(i).size()) {
-            filename = QString("[Cached] ") + filename;
-        }
         TorrentContentModelFile *fileItem = new TorrentContentModelFile(filename, info.fileSize(i), currentParent, i);
         currentParent->appendChild(fileItem);
         m_filesIndex.push_back(fileItem);
